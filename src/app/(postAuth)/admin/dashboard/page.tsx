@@ -4,7 +4,7 @@ import React from "react";
 function Page() {
 
     return (
-        <div>asdfasdf</div>
+        <div>Dashboard apge landed</div>
     );
 }
 
