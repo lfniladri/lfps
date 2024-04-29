@@ -1,8 +1,10 @@
 'use client'
-import React from "react";
+import { AuthContext } from "@/context/AuthContext";
+import React, { useContext } from "react";
 
 function Page() {
-
+    const auth = useContext(AuthContext);
+    console.log("Auth context ", auth);
     return (
         <div>Dashboard apge landed</div>
     );

@@ -42,3 +42,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - [Link 4](https://medium.com/@chizy7/how-to-deploy-a-next-js-app-to-firebase-hosting-5a44b1d5cdf0) 
 - [Followed this link](https://medium.com/nerd-for-tech/lets-deploy-a-next-js-app-with-firebase-hosting-e070b3aecd04)
 - [NEXT JS + REACT JS + FIREBASE  CRUD Operation](https://www.freecodecamp.org/news/create-full-stack-app-with-nextjs13-and-firebase/)
+
