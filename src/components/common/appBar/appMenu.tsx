@@ -52,7 +52,19 @@ const AppMenus = forwardRef(({ }, ref) => {
             id: 3,
             icon: <SettingsIcon />,
             label: "Configuration",
-            url: "/admin/config"
+            subMenu: [
+                {
+                    id: 5,
+                    icon: <Groups2Icon />,
+                    label: "Standard",
+                    url: "/admin/config/standard"
+                },
+                {
+                    id: 6,
+                    icon: <EmojiPeopleIcon />,
+                    label: "Faculty Report",
+                    url: "/admin/report/faculty"
+                }]
         },
         {
             id: 4,
@@ -91,7 +103,7 @@ const AppMenus = forwardRef(({ }, ref) => {
                 <React.Fragment key={menu.id}>
                     {
                         menu.subMenu ? (
-                            <React.Fragment key={menu.id+""+menu.label}>
+                            <React.Fragment key={menu.id+"__"}>
                                 <ListItemButton key={menu.id} onClick={collapseSubMenu}>
                                     <ListItemIcon>
                                         {menu.icon}

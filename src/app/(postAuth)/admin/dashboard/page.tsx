@@ -1,13 +1,16 @@
-'use client'
-import { AuthContext } from "@/context/AuthContext";
-import React, { useContext } from "react";
+"use client";
+import React from "react";
+import { Box } from "@mui/material";
+
 
 function Page() {
-    const auth = useContext(AuthContext);
-    console.log("Auth context ", auth);
-    return (
-        <div>Dashboard apge landed</div>
-    );
+  return (
+    <Box sx={{ p: 1 }}>
+      Hello world
+    
+    
+    </Box>
+  );
 }
 
 export default Page;
