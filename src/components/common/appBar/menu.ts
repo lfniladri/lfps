@@ -14,3 +14,5 @@ export interface Menu {
     url?: string
     subMenu?: Array<MenuDetails>
 }
+
+

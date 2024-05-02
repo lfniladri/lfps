@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 
-import LogoutIcon from '@mui/icons-material/Logout';
 import Toolbar from '@mui/material/Toolbar';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
@@ -10,14 +9,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { AppBar, Drawer, DrawerHeader } from './drawerUtil';
 import AppMenus from './appMenu';
-import { Button } from '@mui/material';
-import { useRouter } from 'next/navigation';
 
 
 export default function LFAppBar({ children }: { children: any }) {
     const [open, setOpen] = React.useState(false);
-    const menuRef = React.useRef<any>();
-    const router = useRouter();
+    const [title,setTitle] = React.useState("Dashboard");
+    
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -25,15 +22,16 @@ export default function LFAppBar({ children }: { children: any }) {
 
     const handleDrawerClose = () => {
         setOpen(false);
-        menuRef.current?.closeAndCollapseSubMenu();
     };
-    const navigate = (url: string) => {
-        router.push(url);
-    }
+ 
+    const getHeaderTitle=(title:string)=>{
+        setTitle(title);
+    };
+    
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <AppBar position="fixed" open={open}>
+             <AppBar position="fixed" open={open}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -48,11 +46,9 @@ export default function LFAppBar({ children }: { children: any }) {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-                        {menuRef.current?.getActiveMenuLabel() || "Dashboard"}
+                       {title}
                     </Typography>
-                    {/* <Button sx={{ float: 'right' }} color="inherit" onClick={() => { navigate('/signin') }}>
-                        <LogoutIcon />
-                    </Button> */}
+               
                 </Toolbar>
 
             </AppBar>
@@ -63,7 +59,7 @@ export default function LFAppBar({ children }: { children: any }) {
                     </IconButton>
                 </DrawerHeader>
 
-                <AppMenus ref={menuRef} />
+                <AppMenus getHeaderTitle={getHeaderTitle}/>
 
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
