@@ -20,16 +20,15 @@ export default function RoleCountCard({
         sx={{
           display: "flex",
           flexDirection: "column",
-          borderRadius: 1,
           justifyContent: "center",
           alignItems: "center",
-          p: 2,
+          p: 1,
         }}
       >
         <Avatar sx={{ bgcolor: `${avatarBgClr}` }}>
           <AssignmentIndIcon sx={{ color: `${clr}` }} />
         </Avatar>
-        <Typography variant="h5" sx={{ mt: 1, fontWeight: 500,}}>
+        <Typography variant="h5" sx={{ mt: 1, fontWeight: 500, fontSize:'16px' }}>
           {count}
         </Typography>
         <Typography

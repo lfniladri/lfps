@@ -42,42 +42,34 @@ export function VerticalBarChart({
     },
   };
 
-  const labels = ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr"];
-  const desired = [100, 110, 100, 125, 80, 90];
-  const total = [80, 90, 85, 85, 120, 80];
-  const recommended = [5, 20, 8, 20, 0, 5];
-  const gap = [15, 0, 7, 20, 0, 5];
+  const labels = ["LKG", "UKG", "1St", "2nd", "3rd", "4th"];
+  const totalAmount = [100, 110, 100, 125, 80, 90];
+  const paid = [80, 90, 85, 85, 80, 0];
+  const due = [20, 20, 15, 40, 0, 90];
   const data = {
     labels,
     datasets: [
       {
-        label: "Desired",
-        data: desired,
+        label: "Total Amount",
+        data: totalAmount,
         backgroundColor: "rgba(7,65,115,0.8)",
         stack: "Stack 0",
         borderRadius: 6,
       },
       {
-        label: "Total",
-        data: total,
+        label: "Paid",
+        data: paid,
         backgroundColor: "rgb(13,110,253,0.8)",
         stack: "Stack 1",
         borderRadius: 6,
       },
       {
-        label: "Available",
-        data: recommended,
-        backgroundColor: "rgba(13,202,240,0.8)",
-        stack: "Stack 1",
-        borderRadius: 6,
-      },
-      {
-        label: "Gap",
-        data: gap,
+        label: "Due",
+        data: due,
         backgroundColor: "rgba(220,53,69,0.8)",
         stack: "Stack 1",
         borderRadius: 6,
-      },
+      }
     ],
   };
   return <Bar options={options} data={data} />;
