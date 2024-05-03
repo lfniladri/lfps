@@ -21,7 +21,7 @@ ChartJS.register(
 
 type VerticalBarChartType = {
   legendPosition: "top" | "bottom";
-  title: string|undefined;
+  title: string | undefined;
 };
 
 export function VerticalBarChart({
@@ -40,6 +40,14 @@ export function VerticalBarChart({
         text: title,
       },
     },
+    yAxes: [
+      {
+        ticks: {
+          stepSize: 50,
+          beginAtZero: true,
+        },
+      },
+    ],
   };
 
   const labels = ["LKG", "UKG", "1St", "2nd", "3rd", "4th"];
@@ -69,7 +77,7 @@ export function VerticalBarChart({
         backgroundColor: "rgba(220,53,69,0.8)",
         stack: "Stack 1",
         borderRadius: 6,
-      }
+      },
     ],
   };
   return <Bar options={options} data={data} />;

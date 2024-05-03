@@ -51,13 +51,13 @@ export default function DashboardPage() {
               variant="caption"
               sx={{ mt: 0.5, mb: 1, display: "block" }}
             >
-              Your dashboard is the control center for empowering education.
+              {`Your dashboard is the control center for empowering education.
               From here, you can monitor student payment, and fine-tune the
               learning experience. Stay informed with real-time analytics,
               streamline administrative tasks with intuitive tools, and foster
               collaboration among instructors and students. Your dedication
               shapes the future of learning. Let's make every interaction
-              count."
+              count."`}
             </Typography>
           </Box>
           <Typography sx={{ fontWeight: 600, mt: 3, mb: 1 }}>

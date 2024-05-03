@@ -1,6 +1,7 @@
 import { Avatar, Box, Card, CardContent, Typography } from "@mui/material";
 import AttributionIcon from "@mui/icons-material/Attribution";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 type CardCountTypes = {
   legend: string;
   count: number;
@@ -26,7 +27,7 @@ export default function RoleCountCard({
         }}
       >
         <Avatar sx={{ bgcolor: `${avatarBgClr}` }}>
-          <AssignmentIndIcon sx={{ color: `${clr}` }} />
+          <CurrencyRupeeIcon sx={{ color: `${clr}` }} />
         </Avatar>
         <Typography variant="h5" sx={{ mt: 1, fontWeight: 500, fontSize:'16px' }}>
           {count}
