@@ -45,7 +45,7 @@ const StudentReportPage = () => {
 
       <Grid container spacing={2}>
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 13].map((item) => (
-          <Grid item lg={3} md={4} sm={6} xs={12}>
+          <Grid item lg={3} md={4} sm={6} xs={12} key={item}>
             <StudentCard />
           </Grid>
         ))}

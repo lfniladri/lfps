@@ -85,7 +85,7 @@ export default function DashboardPage() {
             </Typography>
             <Box display="flex" gap={2}>
               {data.map((item) => (
-                <RoleCountCard legend={item.legend} count={item.count} avatarBgClr={item.bgClr} clr={item.clr} />
+                <RoleCountCard key={item.legend+"__"} legend={item.legend} count={item.count} avatarBgClr={item.bgClr} clr={item.clr} />
               ))}
             </Box>
           </Grid>
