@@ -8,16 +8,15 @@ import {
   Drawer,
   Grid,
   IconButton,
+  Switch,
   TextField,
   Typography,
 } from "@mui/material";
 import SchoolIcon from "@mui/icons-material/School";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
-import { FirebaseDocument } from "@/constants/DocumentNames";
 import { Standard } from "@/type/config";
 import { convertToUTC, getUTCToLocalTime } from "@/util/dateUtil";
-import { getUUID } from "@/util/idGenerator";
 import useConfigSetup from "@/hooks/useConfigSetup";
 import { useQuery } from "react-query";
 
@@ -41,17 +40,16 @@ export default function StandardPage() {
     refetchOnWindowFocus: false,
   });
 
-  console.log(standardData);
+  
 
   const saveStandard = async () => {
     if (standard.trim() === "") {
-      
       return;
     }
 
     let data: Standard = {
       StandardName: standard,
-      isDleted: false,
+      isDeleted: false,
       creationOn: convertToUTC(new Date()),
       updatedOn: convertToUTC(new Date()),
       order: 1,
@@ -91,14 +89,30 @@ export default function StandardPage() {
                   <Box
                     sx={{
                       display: "flex",
+                      justifyContent: "space-between",
                     }}
                   >
-                    <IconButton color="primary">
-                      <SchoolIcon />
-                    </IconButton>
-                    <Typography variant="body1" sx={{ mt: 1 }}>
-                     {item.data.StandardName}
-                    </Typography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                      }}
+                    >
+                      <IconButton color="primary">
+                        <SchoolIcon />
+                      </IconButton>
+                      <Typography variant="body1" sx={{ mt: 1 }}>
+                        {item.data.StandardName}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Switch
+                        defaultChecked={!item.data.isDeleted}
+                        size="small"
+                        onChange={(e) => {
+                          console.log(e.target);
+                        }}
+                      />
+                    </Box>
                   </Box>
                   <Typography variant="caption" sx={{ float: "right" }}>
                     {getUTCToLocalTime(item.data.creationOn, "Complete")}

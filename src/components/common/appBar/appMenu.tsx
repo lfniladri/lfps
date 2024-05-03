@@ -7,6 +7,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import Groups2Icon from "@mui/icons-material/Groups2";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import SchoolIcon from "@mui/icons-material/School";
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import { useRouter } from "next/navigation";
 import {
   Collapse,
@@ -55,9 +56,9 @@ const AppMenus = ({ getHeaderTitle }: { getHeaderTitle: any }) => {
         },
         {
           id: 6,
-          icon: <EmojiPeopleIcon />,
-          label: "Faculty Report",
-          url: "/admin/report/faculty",
+          icon: <CurrencyRupeeIcon />,
+          label: "Payment Info",
+          url: "/admin/config/payment",
         },
       ],
     },
