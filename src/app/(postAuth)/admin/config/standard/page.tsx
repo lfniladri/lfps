@@ -195,89 +195,93 @@ export default function StandardPage() {
         </Button>
       </Box>
 
-      <Grid container spacing={2} sx={{mt:2}}>
+      <Grid container spacing={2} sx={{ mt: 2 }}>
         {standardData &&
           standardData.map((std: Standard) => (
             <Grid item md={3} sm={6} xs={12} key={std.id}>
-              <Card>
-                <Box sx={{ display: "flex", flexDirection: "column" }}>
-                  <Box>
-                    <Typography variant="caption" sx={{ float: "right" }}>
-                      {std.isActive ? (
-                        <Box
-                          sx={{
-                            backgroundColor: "#1976d2",
-                            color: "white",
-                            padding: "1px 5px",
-                            borderRadius: 1,
-                          }}
-                        >
-                          Active
-                        </Box>
-                      ) : (
-                        <Box
-                          className="bg-danger"
-                          sx={{
-                            color: "white",
-                            padding: "1px 5px",
-                            borderRadius: 1,
-                          }}
-                        >
-                          In Active
-                        </Box>
-                      )}
-                    </Typography>
-                  </Box>
-                  <Box sx={{padding:"1px 10px"}}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        flexGrow: 1,
-                      }}
-                    >
+              <Tooltip title={std.description}>
+                <Card>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      height: "100%",
+                    }}
+                  >
+                    <Box>
+                      <Typography variant="caption" sx={{ float: "right" }}>
+                        {std.isActive ? (
+                          <Box
+                            sx={{
+                              backgroundColor: "#1976d2",
+                              color: "white",
+                              padding: "1px 5px",
+                              borderRadius: 1,
+                            }}
+                          >
+                            Active
+                          </Box>
+                        ) : (
+                          <Box
+                            className="bg-danger"
+                            sx={{
+                              color: "white",
+                              padding: "1px 5px",
+                              borderRadius: 1,
+                            }}
+                          >
+                            In Active
+                          </Box>
+                        )}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ padding: "1px 10px" }}>
                       <Box
                         sx={{
                           display: "flex",
+                          justifyContent: "space-between",
                         }}
                       >
-                        <IconButton color="primary" sx={{ pl: 0 }}>
-                          <SchoolIcon />
-                        </IconButton>
-                        <Typography variant="body1" sx={{ mt: 1 }}>
-                          {std.name}
-                        </Typography>
-                      </Box>
+                        <Box
+                          sx={{
+                            display: "flex",
+                          }}
+                        >
+                          <IconButton color="primary" sx={{ pl: 0 }}>
+                            <SchoolIcon />
+                          </IconButton>
+                          <Typography variant="body1" sx={{ mt: 1 }}>
+                            {std.name}
+                          </Typography>
+                        </Box>
 
-                      <IconButton
-                        color="primary"
-                        autoFocus={true}
-                        onClick={(e) => showMore(e, std)}
-                      >
-                        <MoreVertIcon />
-                      </IconButton>
-                    </Box>
-                    <Tooltip title={std.description}>
-                      <Box
-                        sx={{
-                          textAlign: "justify",
-                          flexGrow: 1,
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        <Typography variant="caption">
-                          <b>Description: </b> {std.description}
-                        </Typography>
+                        <IconButton
+                          color="primary"
+                          autoFocus={true}
+                          onClick={(e) => showMore(e, std)}
+                        >
+                          <MoreVertIcon />
+                        </IconButton>
                       </Box>
-                    </Tooltip>
-                    <Typography variant="caption" sx={{ float: "right" }}>
-                      {getUTCToLocalTime(std.creationOn, "Complete")}
-                    </Typography>{" "}
+                    </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        alignItems: " flex-end",
+                        alignContent: "flex-end",
+                        height: "100%",
+                        pr: 1,
+                        pb: 1,
+                      }}
+                    >
+                      <Typography variant="caption">
+                        {getUTCToLocalTime(std.creationOn, "Complete")}
+                      </Typography>
+                    </Box>
                   </Box>
-                </Box>
-              </Card>
+                </Card>
+              </Tooltip>
             </Grid>
           ))}
       </Grid>
