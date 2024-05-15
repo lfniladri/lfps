@@ -40,14 +40,18 @@ export function VerticalBarChart({
         text: title,
       },
     },
-    yAxes: [
-      {
-        ticks: {
-          stepSize: 50,
-          beginAtZero: true,
-        },
-      },
-    ],
+    // y: {
+    //   title: {
+    //     display: true,
+    //     text: "Amount",
+    //   },
+    //   // min: 0,
+    //   // max: 100,
+    //   ticks: {
+    //     // forces step size to be 50 units
+    //     stepSize: 20,
+    //   },
+    // },
   };
 
   const labels = ["LKG", "UKG", "1St", "2nd", "3rd", "4th"];
@@ -80,5 +84,5 @@ export function VerticalBarChart({
       },
     ],
   };
-  return <Bar options={options} data={data} />;
+  return <Bar options={options} data={data}  height={150}/>;
 }

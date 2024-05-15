@@ -1,7 +1,8 @@
 import { CretedOrUpdated } from "./creationUptaion";
 
 export interface Standard extends CretedOrUpdated {
-  StandardName: string;
+  name: string;
+  description: string;
   isDeleted: boolean;
-  order: number
+  order: number;
 }

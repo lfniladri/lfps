@@ -2,7 +2,9 @@
 import {
   Box,
   Button,
+  Checkbox,
   FormControl,
+  FormControlLabel,
   Grid,
   InputLabel,
   MenuItem,
@@ -10,18 +12,23 @@ import {
   TextField,
 } from "@mui/material";
 import * as React from "react";
-import EditNoteIcon from "@mui/icons-material/EditNote";
 import Typography from "@mui/material/Typography";
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
 } from "@/components/admission/admissionAccordian";
-import TaskAltIcon from "@mui/icons-material/TaskAlt";
-import CancelIcon from "@mui/icons-material/Cancel";
 import ViewAdmissionFilledForm from "../../../../components/admission/viewFormModal";
 import PersonalDetails from "@/components/admission/personalDetails";
-import AddressAndFamilyInfo from "@/components/admission/address-familyinfo";
+import AddressDetails from "@/components/admission/addressDetails";
+import FamilyInformation from "@/components/admission/familyInfo";
+import PortraitIcon from "@mui/icons-material/Portrait";
+import VisuallyHiddenInput from "@/components/common/visuallyHiddenInput";
+import dayjs, { Dayjs } from "dayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 const AdmissionPage = () => {
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
@@ -49,7 +56,7 @@ const AdmissionPage = () => {
           <AccordionDetails>
             <Grid container spacing={2}>
               <Grid item lg={3} md={4} sm={6} xs={12}>
-                <FormControl fullWidth>
+                <FormControl fullWidth size="small">
                   <InputLabel id="demo-simple-select-label">
                     Standard
                   </InputLabel>
@@ -58,6 +65,7 @@ const AdmissionPage = () => {
                     id="demo-simple-select"
                     defaultValue={""}
                     label="Standard"
+                    size="small"
                   >
                     <MenuItem value={10}>Ten</MenuItem>
                     <MenuItem value={20}>Twenty</MenuItem>
@@ -65,6 +73,8 @@ const AdmissionPage = () => {
                   </Select>
                 </FormControl>
               </Grid>
+         
+         
             </Grid>
           </AccordionDetails>
         </Accordion>
@@ -89,10 +99,102 @@ const AdmissionPage = () => {
           sx={{ borderRadius: 1 }}
         >
           <AccordionSummary>
-            <Typography>Residential Address & Family information</Typography>
+            <Typography>Residential Address</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <AddressAndFamilyInfo />
+            <AddressDetails />
+          </AccordionDetails>
+        </Accordion>
+
+        {/* Candidates's Parent Information */}
+        <Accordion
+          expanded={expanded === "panel4"}
+          onChange={handleChange("panel4")}
+          sx={{ borderRadius: 1 }}
+        >
+          <AccordionSummary>
+            <Typography>Family Info</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <FamilyInformation />
+          </AccordionDetails>
+        </Accordion>
+
+        {/* Emergency Contact Details */}
+
+        <Accordion
+          expanded={expanded === "panel5"}
+          onChange={handleChange("panel5")}
+          sx={{ borderRadius: 1 }}
+        >
+          <AccordionSummary>
+            <Typography>Emergency Contact</Typography>
+          </AccordionSummary>
+          <AccordionDetails></AccordionDetails>
+        </Accordion>
+
+        {/* Sibling inforamtion */}
+
+        <Accordion
+          expanded={expanded === "panel6"}
+          onChange={handleChange("panel6")}
+          sx={{ borderRadius: 1 }}
+        >
+          <AccordionSummary>
+            <Typography>Admission Seeking In</Typography>
+          </AccordionSummary>
+          <AccordionDetails></AccordionDetails>
+        </Accordion>
+
+        {/* Reference Details */}
+
+        <Accordion
+          expanded={expanded === "panel7"}
+          onChange={handleChange("panel7")}
+          sx={{ borderRadius: 1 }}
+        >
+          <AccordionSummary>
+            <Typography>Reference Details</Typography>
+          </AccordionSummary>
+          <AccordionDetails></AccordionDetails>
+        </Accordion>
+
+        {/* Declaration */}
+
+        <Accordion
+          expanded={expanded === "panel8"}
+          onChange={handleChange("panel8")}
+          sx={{ borderRadius: 1 }}
+        >
+          <AccordionSummary>
+            <Typography>Declaration</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <FormControlLabel
+              control={<Checkbox defaultChecked />}
+              label="I/We confirm that all the information provided by me/us is
+                correct. I / We further agree to inform the school promptly, in
+                writing, of any subsequent changes. I / We agree to meet
+                financial responsibilities promptly. I / We understand that any
+                incorrect information given by me/us will render this
+                application invalid and, consequently, the admission granted
+                will be cancelled."
+            />
+
+            <Box sx={{ display: "flex", justifyContent: "flex-end", mt:5 }}>
+              <FormControl fullWidth size="small">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={["DatePicker", "DatePicker"]}>
+                    <DatePicker
+                      sx={{ flex: 1 }}
+                      label="Date"
+                      defaultValue={dayjs("2022-04-17")}
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+              </FormControl>
+              <FormControl fullWidth size="small"></FormControl>
+            </Box>
           </AccordionDetails>
         </Accordion>
 

@@ -18,6 +18,7 @@ const PersonalDetails = () => {
       <Grid item lg={3} md={4} sm={6} xs={12}>
         <FormControl fullWidth>
           <TextField
+            size="small"
             id="candidate-firstname"
             label="First Name"
             variant="outlined"
@@ -27,6 +28,7 @@ const PersonalDetails = () => {
       <Grid item lg={3} md={4} sm={6} xs={12}>
         <FormControl fullWidth>
           <TextField
+            size="small"
             id="candidate-middlename"
             label="Middle Name"
             variant="outlined"
@@ -36,6 +38,7 @@ const PersonalDetails = () => {
       <Grid item lg={3} md={4} sm={6} xs={12}>
         <FormControl fullWidth>
           <TextField
+            size="small"
             id="candidate-lastname"
             label="Last Name"
             variant="outlined"
@@ -43,10 +46,11 @@ const PersonalDetails = () => {
         </FormControl>
       </Grid>
       <Grid item lg={3} md={4} sm={6} xs={12}>
-        <FormControl fullWidth>
+        <FormControl fullWidth size="small">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={["DatePicker", "DatePicker"]} >
-              <DatePicker sx={{flex:1}}
+            <DemoContainer components={["DatePicker", "DatePicker"]}>
+              <DatePicker
+                sx={{ flex: 1 }}
                 label="Date Of Birth"
                 defaultValue={dayjs("2022-04-17")}
               />
@@ -55,9 +59,10 @@ const PersonalDetails = () => {
         </FormControl>
       </Grid>
       <Grid item lg={3} md={4} sm={6} xs={12}>
-        <FormControl fullWidth>
+        <FormControl fullWidth size="small">
           <InputLabel id="gender-select-label">Gender</InputLabel>
           <Select
+            size="small"
             labelId="gender-select-label"
             id="demo-simple-select"
             label="Gender"
@@ -72,6 +77,7 @@ const PersonalDetails = () => {
       <Grid item lg={3} md={4} sm={6} xs={12}>
         <FormControl fullWidth>
           <TextField
+            size="small"
             id="place-of-birth"
             label="Place of birth"
             variant="outlined"
@@ -79,9 +85,10 @@ const PersonalDetails = () => {
         </FormControl>
       </Grid>
       <Grid item lg={3} md={4} sm={6} xs={12}>
-        <FormControl fullWidth>
+        <FormControl fullWidth size="small">
           <InputLabel id="gender-select-label">First Language</InputLabel>
           <Select
+            size="small"
             labelId="gender-select-label"
             id="demo-simple-select"
             label="Gender"
@@ -94,12 +101,13 @@ const PersonalDetails = () => {
         </FormControl>
       </Grid>
       <Grid item lg={3} md={4} sm={6} xs={12}>
-        <FormControl fullWidth>
+        <FormControl fullWidth size="small">
           <InputLabel id="gender-select-label">Other Language Known</InputLabel>
           <Select
             labelId="gender-select-label"
             id="demo-simple-select"
             label="Gender"
+            size="small"
           >
             <MenuItem value={""}>Select</MenuItem>
             <MenuItem value={""}>Select</MenuItem>

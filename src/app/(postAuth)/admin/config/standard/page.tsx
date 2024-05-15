@@ -21,10 +21,9 @@ import useConfigSetup from "@/hooks/useConfigSetup";
 import { useQuery } from "react-query";
 
 export default function StandardPage() {
-  const [standard, setStandard] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
-  const [errorMsg, setErrorMsg] = useState<string>("");
   const ConfigSetupService = useConfigSetup();
+
 
   const {
     isLoading,
@@ -40,23 +39,20 @@ export default function StandardPage() {
     refetchOnWindowFocus: false,
   });
 
-  
-
   const saveStandard = async () => {
-    if (standard.trim() === "") {
-      return;
-    }
+    
+    
 
     let data: Standard = {
-      StandardName: standard,
+      name: "standard",
+      description:"",
       isDeleted: false,
       creationOn: convertToUTC(new Date()),
       updatedOn: convertToUTC(new Date()),
       order: 1,
     };
 
-    setOpen(false), setStandard("");
-
+    setOpen(false)
     const { result, error } = await ConfigSetupService.saveStandard(data);
 
     if (!result) {
@@ -152,8 +148,16 @@ export default function StandardPage() {
             id="outlined-basic"
             label="Standard"
             variant="outlined"
-            value={standard}
-            onChange={(e) => setStandard(e.target.value)}
+          />
+
+          <TextField
+            fullWidth
+            multiline
+            rows={4}
+            id="outlined-basic"
+            label="Description"
+            variant="outlined"
+           
           />
 
           <Box
@@ -168,7 +172,6 @@ export default function StandardPage() {
             <Button
               variant="outlined"
               onClick={() => {
-                setStandard("");
                 setOpen(false);
               }}
             >
