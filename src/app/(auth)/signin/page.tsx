@@ -11,7 +11,6 @@ const SignInPage = () => {
     const [errors,setErrors]= useState({})
     const router = useRouter()
     const validationSchema = (values: any) => {
-        console.log("Values:", values);
         const LoggInUserForm = z.object({
             email: z.string().email("Invalid email address"),
             password: z.string().min(6, "Password length atleast 6 character long")
@@ -82,7 +81,7 @@ const SignInPage = () => {
                                                 value={loginFormik.values.email}
                                                 onChange={loginFormik.handleChange}
                                                 error={loginFormik.touched.email && Boolean(loginFormik.errors.email)}
-                                                helperText={loginFormik.touched.email && String(loginFormik.errors.email)}
+                                                helperText={loginFormik.errors.email && loginFormik.touched.email && String(loginFormik.errors.email)}
                                             />
                                         </FormControl>
                                         <FormControl>
@@ -95,7 +94,7 @@ const SignInPage = () => {
                                                 value={loginFormik.values.password}
                                                 onChange={loginFormik.handleChange}
                                                 error={loginFormik.touched.password && Boolean(loginFormik.errors.password)}
-                                                helperText={loginFormik.touched.password && String(loginFormik.errors.password)}
+                                                helperText={loginFormik.errors.password && loginFormik.touched.password && String(loginFormik.errors.password)}
                                             />
                                             
                                         </FormControl>

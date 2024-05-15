@@ -6,10 +6,12 @@ import {
   CardContent,
   Divider,
   Drawer,
+  FormControl,
   Grid,
   IconButton,
-  Switch,
+  MenuItem,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import SchoolIcon from "@mui/icons-material/School";
@@ -19,11 +21,91 @@ import { Standard } from "@/type/config";
 import { convertToUTC, getUTCToLocalTime } from "@/util/dateUtil";
 import useConfigSetup from "@/hooks/useConfigSetup";
 import { useQuery } from "react-query";
+import { useFormik } from "formik";
+import { z } from "zod";
+import EditIcon from "@mui/icons-material/Edit";
+import StyledMenu from "@/components/common/menuStyledComponent";
+import ToggleOnIcon from "@mui/icons-material/ToggleOn";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 export default function StandardPage() {
   const [open, setOpen] = useState<boolean>(false);
-  const ConfigSetupService = useConfigSetup();
+  const [standardInit, setStandardInit] = useState<any>({
+    id: "",
+    standard: "",
+    description: "",
+  });
+  const [updateData, setUpdateData] = useState<Standard>({} as Standard);
 
+  const ConfigSetupService = useConfigSetup();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const openStyleMenu = Boolean(anchorEl);
+  const showMore = (
+    event: React.MouseEvent<HTMLElement>,
+    standardData: Standard
+  ) => {
+    setAnchorEl(event.currentTarget);
+    resetForm();
+
+    setUpdateData({ ...standardData });
+
+    setStandardInit({
+      id: standardData.id,
+      standard: standardData.name,
+      description: standardData.description,
+    });
+  };
+  const closeShowMore = () => {
+    setAnchorEl(null);
+  };
+
+  const validationSchema = (values: any) => {
+    const standardForm = z.object({
+      standard: z.string().min(1, "Standard can't be empty"),
+      description: z.string().min(1, "Description can't be empty"),
+    });
+
+    try {
+      standardForm.parse(values);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.log("ERR: ", error.formErrors.fieldErrors);
+        return error.formErrors.fieldErrors;
+      }
+    }
+  };
+
+  const standardFormik = useFormik({
+    initialValues: standardInit,
+    enableReinitialize: true,
+    validate: validationSchema,
+    onSubmit: (values: any) => {
+      if (values.id == undefined || values.id == "") {
+        saveStandard(values);
+      } else {
+        let id = updateData.id;
+        delete updateData.id;
+
+        id &&
+          updateStandard(
+            {
+              ...updateData,
+              name: values.standard,
+              description: values.description,
+            },
+            id
+          );
+      }
+    },
+  });
+
+  function resetForm() {
+    standardFormik.resetForm();
+    setStandardInit({
+      standard: "",
+      description: "",
+    });
+  }
 
   const {
     isLoading,
@@ -39,28 +121,62 @@ export default function StandardPage() {
     refetchOnWindowFocus: false,
   });
 
-  const saveStandard = async () => {
-    
-    
-
+  const saveStandard = async (value: any) => {
     let data: Standard = {
-      name: "standard",
-      description:"",
+      name: value.standard,
+      description: value.description,
+      isActive: true,
       isDeleted: false,
       creationOn: convertToUTC(new Date()),
       updatedOn: convertToUTC(new Date()),
       order: 1,
     };
 
-    setOpen(false)
+    setOpen(false);
     const { result, error } = await ConfigSetupService.saveStandard(data);
 
     if (!result) {
+      resetForm();
       refetch();
     }
     if (error) {
       return console.log(error);
     }
+  };
+
+  const updateStandard = async (value: Standard, docId: string) => {
+    setOpen(false);
+    const { result, error } = await ConfigSetupService.updateStandard(
+      value,
+      docId
+    );
+
+    if (!result) {
+      resetForm();
+      refetch();
+    }
+    if (error) {
+      return console.log(error);
+    }
+  };
+
+  const update = () => {
+    closeShowMore();
+    setOpen(true);
+  };
+
+  const toggleActivation = () => {
+    let id = updateData.id;
+    delete updateData.id;
+
+    id &&
+      updateStandard(
+        {
+          ...updateData,
+          isActive: !updateData.isActive,
+        },
+        id
+      );
   };
 
   return (
@@ -70,50 +186,97 @@ export default function StandardPage() {
           variant="contained"
           size="small"
           sx={{ textDecoration: "none" }}
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            resetForm();
+            setOpen(true);
+          }}
         >
           Add Degree <SchoolIcon sx={{ ml: 1 }} />
         </Button>
       </Box>
 
-      <Grid container spacing={2}>
+      <Grid container spacing={2} sx={{mt:2}}>
         {standardData &&
-          standardData.map((item: any) => (
-            <Grid item md={3} sm={6} xs={12} key={item.id}>
+          standardData.map((std: Standard) => (
+            <Grid item md={3} sm={6} xs={12} key={std.id}>
               <Card>
-                <CardContent>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                  <Box>
+                    <Typography variant="caption" sx={{ float: "right" }}>
+                      {std.isActive ? (
+                        <Box
+                          sx={{
+                            backgroundColor: "#1976d2",
+                            color: "white",
+                            padding: "1px 5px",
+                            borderRadius: 1,
+                          }}
+                        >
+                          Active
+                        </Box>
+                      ) : (
+                        <Box
+                          className="bg-danger"
+                          sx={{
+                            color: "white",
+                            padding: "1px 5px",
+                            borderRadius: 1,
+                          }}
+                        >
+                          In Active
+                        </Box>
+                      )}
+                    </Typography>
+                  </Box>
+                  <Box sx={{padding:"1px 10px"}}>
                     <Box
                       sx={{
                         display: "flex",
+                        justifyContent: "space-between",
+                        flexGrow: 1,
                       }}
                     >
-                      <IconButton color="primary">
-                        <SchoolIcon />
-                      </IconButton>
-                      <Typography variant="body1" sx={{ mt: 1 }}>
-                        {item.data.StandardName}
-                      </Typography>
-                    </Box>
-                    <Box>
-                      <Switch
-                        defaultChecked={!item.data.isDeleted}
-                        size="small"
-                        onChange={(e) => {
-                          console.log(e.target);
+                      <Box
+                        sx={{
+                          display: "flex",
                         }}
-                      />
+                      >
+                        <IconButton color="primary" sx={{ pl: 0 }}>
+                          <SchoolIcon />
+                        </IconButton>
+                        <Typography variant="body1" sx={{ mt: 1 }}>
+                          {std.name}
+                        </Typography>
+                      </Box>
+
+                      <IconButton
+                        color="primary"
+                        autoFocus={true}
+                        onClick={(e) => showMore(e, std)}
+                      >
+                        <MoreVertIcon />
+                      </IconButton>
                     </Box>
+                    <Tooltip title={std.description}>
+                      <Box
+                        sx={{
+                          textAlign: "justify",
+                          flexGrow: 1,
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        <Typography variant="caption">
+                          <b>Description: </b> {std.description}
+                        </Typography>
+                      </Box>
+                    </Tooltip>
+                    <Typography variant="caption" sx={{ float: "right" }}>
+                      {getUTCToLocalTime(std.creationOn, "Complete")}
+                    </Typography>{" "}
                   </Box>
-                  <Typography variant="caption" sx={{ float: "right" }}>
-                    {getUTCToLocalTime(item.data.creationOn, "Complete")}
-                  </Typography>
-                </CardContent>
+                </Box>
               </Card>
             </Grid>
           ))}
@@ -143,46 +306,99 @@ export default function StandardPage() {
           </Box>
           <Divider sx={{ mb: 2 }} />
 
-          <TextField
-            fullWidth
-            id="outlined-basic"
-            label="Standard"
-            variant="outlined"
-          />
+          <form onSubmit={standardFormik.handleSubmit}>
+            <FormControl fullWidth sx={{ mb: 2 }}>
+              <TextField
+                fullWidth
+                id="standard"
+                label="Standard"
+                variant="outlined"
+                value={standardFormik.values.standard}
+                onChange={standardFormik.handleChange}
+                error={
+                  standardFormik.touched.standard &&
+                  Boolean(standardFormik.errors.standard)
+                }
+                helperText={
+                  standardFormik.errors.standard &&
+                  standardFormik.touched.standard &&
+                  String(standardFormik.errors.standard)
+                }
+              />
+            </FormControl>
 
-          <TextField
-            fullWidth
-            multiline
-            rows={4}
-            id="outlined-basic"
-            label="Description"
-            variant="outlined"
-           
-          />
+            <FormControl fullWidth>
+              <TextField
+                fullWidth
+                multiline
+                rows={4}
+                id="description"
+                label="Description"
+                variant="outlined"
+                value={standardFormik.values.description}
+                onChange={standardFormik.handleChange}
+                error={
+                  standardFormik.touched.description &&
+                  Boolean(standardFormik.errors.description)
+                }
+                helperText={
+                  standardFormik.errors.description &&
+                  standardFormik.touched.description &&
+                  String(standardFormik.errors.description)
+                }
+              />
+            </FormControl>
 
-          <Box
-            sx={{
-              display: "flex",
-              marginTop: `auto`,
-              mt: 2,
-              justifyContent: "flex-end",
-              gap: 2,
-            }}
-          >
-            <Button
-              variant="outlined"
-              onClick={() => {
-                setOpen(false);
+            <Box
+              sx={{
+                display: "flex",
+                marginTop: `auto`,
+                mt: 2,
+                justifyContent: "flex-end",
+                gap: 2,
               }}
             >
-              Cancel
-            </Button>
-            <Button variant="contained" onClick={saveStandard}>
-              Save
-            </Button>
-          </Box>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  setOpen(false);
+                }}
+              >
+                Cancel
+              </Button>
+              <Button variant="contained" type="submit">
+                Save
+              </Button>
+            </Box>
+          </form>
         </Box>
       </Drawer>
+
+      <StyledMenu
+        id="demo-customized-menu"
+        MenuListProps={{
+          "aria-labelledby": "demo-customized-button",
+        }}
+        anchorEl={anchorEl}
+        open={openStyleMenu}
+        onClose={closeShowMore}
+      >
+        <MenuItem onClick={update} disableRipple>
+          <EditIcon />
+          Edit
+        </MenuItem>
+        <Divider sx={{ my: 0.5 }} />
+        <MenuItem
+          disableRipple
+          onClick={() => {
+            closeShowMore();
+            toggleActivation();
+          }}
+        >
+          <ToggleOnIcon />
+          {updateData.isActive ? "De Activate" : "Activate"}
+        </MenuItem>
+      </StyledMenu>
     </Box>
   );
 }

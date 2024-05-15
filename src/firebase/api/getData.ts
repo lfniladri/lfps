@@ -8,6 +8,14 @@ import {
 } from "firebase/firestore";
 
 const db = getFirestore(firebase_app);
+
+
+/**
+ * Fetch a single document by using id
+ * @param collection 
+ * @param id 
+ * @returns 
+ */
 async function getDoument(collection: any, id: string) {
   let docRef = doc(db, collection, id);
 
@@ -24,6 +32,11 @@ async function getDoument(collection: any, id: string) {
 }
 
 
+/**
+ * Fetch all the docuemnt
+ * @param collectionName 
+ * @returns 
+ */
 async function getAllDocument(collectionName: string) {
     const querySnapshot = await getDocs(collection(db, collectionName)); // Assuming `db` is defined somewhere
   
