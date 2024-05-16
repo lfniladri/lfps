@@ -1,3 +1,5 @@
 export enum FirebaseDocument {
-    Standard="Standard"
+    Standard="Standard",
+    PaymentMode = "PaymentMode",
+    PaymentForCategory = "PaymentForCategories"
   }
