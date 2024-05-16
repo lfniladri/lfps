@@ -61,30 +61,9 @@ const SignInPage = () => {
 
   return (
     <Grid container sx={{ height: "100%" }} spacing={2}>
-      <Grid
-        item
-        md={6}
-        xs={12}
-        sx={{
-          backgroundColor: "#1976d2",
-          p: 2,
-          height: "100%",
-          display: "flex",
-
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Box sx={{ textAlign: "center" }}>
-          <AccountBalanceIcon sx={{ color: "white", fontSize: "100px" }} />
-          <Typography
-            sx={{ color: "white", textTransform: "italic", fontSize: "16px" }}
-          >
-            Little Flower Public Shools
-          </Typography>
-        </Box>
-      </Grid>
-      <Grid item md={6} sm={12} xs={12}>
+     
+      <Grid item md={6} sm={12} xs={12} sx={{
+            height: "100%"}}>
         <Box
           sx={{
             height: "100%",
@@ -150,6 +129,29 @@ const SignInPage = () => {
               </form>
             </CardContent>
           </Card>
+        </Box>
+      </Grid> 
+      <Grid
+        item
+        md={6}
+        xs={12}
+        sx={{
+          backgroundColor: "#1976d2",
+          p: 2,
+          height: "100%",
+          display: "flex",
+
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Box sx={{ textAlign: "center" }}>
+          <AccountBalanceIcon sx={{ color: "white", fontSize: "100px" }} />
+          <Typography
+            sx={{ color: "white", textTransform: "italic", fontSize: "16px" }}
+          >
+            Little Flower Public Shools
+          </Typography>
         </Box>
       </Grid>
     </Grid>
